@@ -13,20 +13,25 @@ var showBlock = function (selector) {
 showBlock('.setup');
 showBlock('.setup-similar');
 
-var randomInteger = function (min, max) {
-  var random = min + Math.random() * (max + 1 - min);
-  random = Math.floor(random);
-  return random;
-};
+// var randomInteger = function (min, max) {
+//   var random = min + Math.random() * (max + 1 - min);
+//   random = Math.floor(random);
+//   return random;
+// };
 
-var createRandomWizards = function (name, surname, coatColor, eyesColor) {
+function getRandomArrayElement(arr) {
+  var randomElement = Math.floor(Math.random() * arr.length);
+  return arr[randomElement];
+}
+
+var createRandomWizards = function (names, surnames, coatColors, eyesColors) {
   var randomWizards = [];
-  for (var i = 0; i < name.length; i++) {
+  for (var i = 0; i < names.length; i++) {
     randomWizards[i] = {
-      name: name[i],
-      surname: surname[i],
-      coatColor: coatColor[randomInteger(0, coatColor.length - 1)],
-      eyesColor: eyesColor[randomInteger(0, eyesColor.length - 1)]
+      name: names[i],
+      surname: surnames[i],
+      coatColor: getRandomArrayElement(coatColors),
+      eyesColor: getRandomArrayElement(eyesColors)
     };
   }
   return randomWizards;
