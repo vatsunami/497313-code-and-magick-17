@@ -3,8 +3,24 @@
 (function () {
 
   var setupDialogElement = document.querySelector('.setup');
-  var dialogHandler = setupDialogElement.querySelector('.upload');
+  var dialogHandle = setupDialogElement.querySelector('.upload');
   var dialogOpen = document.querySelector('.setup-open-icon');
+
+  var setupForm = document.querySelector('.setup-wizard-form');
+  var setupButtonSubmit = setupForm.querySelector('.setup-submit');
+
+  var onSuccess = function () {
+    setupDialogElement.classList.add('hidden');
+    setupButtonSubmit.disable = false;
+  };
+
+  var onSetupFormSubmit = function (evt) {
+    evt.preventDefault();
+    setupButtonSubmit.disable = true;
+    window.backend.save(new FormData(setupForm), onSuccess, window.setup.onError);
+  };
+
+  setupForm.addEventListener('submit', onSetupFormSubmit);
 
   var returnToStartCoords = function () {
     setupDialogElement.style = '';
@@ -14,7 +30,7 @@
     returnToStartCoords();
   });
 
-  dialogHandler.addEventListener('mousedown', function (evt) {
+  dialogHandle.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
     var startCoords = {
@@ -48,9 +64,9 @@
       if (dragged) {
         var onClickPreventDefault = function (clickEvt) {
           clickEvt.preventDefault();
-          dialogHandler.removeEventListener('click', onClickPreventDefault);
+          dialogHandle.removeEventListener('click', onClickPreventDefault);
         };
-        dialogHandler.addEventListener('click', onClickPreventDefault);
+        dialogHandle.addEventListener('click', onClickPreventDefault);
       }
 
       document.removeEventListener('mousemove', onMouseMove);
