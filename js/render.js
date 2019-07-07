@@ -1,14 +1,8 @@
+'use strict';
+
 (function () {
 
   var COUNT_OF_WIZARDS = 4;
-
-  var getSomeElementsWithoutRepeat = function (array, number) {
-    var copy = array.slice();
-    for (var j = copy.length - 1; j >= number; j--) {
-      copy.splice(Math.floor(Math.random() * copy.length), 1);
-    }
-    return copy;
-  };
 
   var similarListElement = document.querySelector('.setup-similar-list');
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
@@ -24,17 +18,17 @@
   };
 
   var createFragment = function (wizards) {
-    var someWizards = getSomeElementsWithoutRepeat(wizards, COUNT_OF_WIZARDS);
 
     var fragment = document.createDocumentFragment();
+    similarListElement.innerHTML = '';
     for (var i = 0; i < COUNT_OF_WIZARDS; i++) {
-      fragment.appendChild(renderWizard(someWizards[i]));
+      fragment.appendChild(renderWizard(wizards[i]));
     }
     similarListElement.appendChild(fragment);
-  }
+  };
 
   window.render = {
     createFragment: createFragment
-  }
+  };
 
 })();
